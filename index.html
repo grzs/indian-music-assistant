@@ -245,7 +245,7 @@
     if (typeof(i) == "number" && i >= 0 && i < beats.length) { currentMatra = i; }
     else { ++currentMatra == beats.length && (currentMatra = 0); }
     if (currentMatra == 0) {
-      ++lineIndex == bandish.length && (lineIndex = 0);
+      if (i === 0 || (++lineIndex == bandish.length)) lineIndex = 0;
       setBandishLine()
       loop != undefined && sam.play();
     }
