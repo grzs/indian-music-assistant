@@ -4,6 +4,9 @@
   <head>
 
     <style>
+      #transport {
+          padding-bottom: 20px;
+      }
       td {
           width: 40px;
           text-align: center;
@@ -26,15 +29,26 @@
       #bols .current {
           background-color: lightgreen;
       }
+      .bandish .current {
+          background-color: lightgreen;
+      }
+      .bandish.currentline {
+          background-color: lightgray;
+      }
     </style>
 
   </head>
 
   <body>
     <form>
-      <input id="bpmSlider" type="range" min="1" max="300" value="60" onchange="setBPM()"/>
-      <input id="bpm" type="number" min="1" max="300" value="60" onchange="play()"/>
+      <input id="bpmSlider" type="range" min="1" max="300" value="60" onchange="setBpmSlider()"/>
+      <input id="bpm" type="number" min="1" max="300" value="60" onchange="setBpm()"/>
     </form>
+
+    <div id="transport">
+      <button onclick="play()">Play</button>
+      <button onclick="stop()">Stop</button>
+    </div>
 
     <table>
       <tbody>
@@ -80,13 +94,108 @@
           <td>Ga de</td>
           <td>Ge na</td>
         </tr>
+        <tr class="bandish">
+          <td class="current">
+            <div>A</div>
+            <div>P</div>
+          </td>
+          <td>
+            <div>-</div>
+            <div>m</div>
+          </td>
+          <td>
+            <div>nan</div>
+            <div>G</div>
+          </td>
+          <td>
+            <div>-</div>
+            <div>-</div>
+          </td>
+          <td>
+            <div>di</div>
+            <div>G</div>
+          </td>
+          <td>
+            <div>-</div>
+            <div>R</div>
+          </td>
+          <td>
+            <div>Ja</div>
+            <div>S</div>
+          </td>
+          <td>
+            <div>ga</div>
+            <div><u>N</u></div>
+          </td>
+          <td>
+            <div>-</div>
+            <div><u>D</u></div>
+          </td>
+          <td>
+            <div>Ban</div>
+            <div><u>N</u></div>
+          </td>
+          <td>
+            <div>-</div>
+            <div>R</div>
+          </td>
+          <td>
+            <div>di</div>
+            <div>S</div>
+          </td>
+        </tr>
+        <tr class="bandish">
+          <td>
+            <div>Tri</div>
+            <div>S</div>
+          </td>
+          <td>
+            <div>pu</div>
+            <div>S</div>
+          </td>
+          <td>
+            <div>ra</div>
+            <div>S</div>
+          </td>
+          <td>
+            <div>Sun</div>
+            <div>(R)<u>N</u></div>
+          </td>
+          <td>
+            <div>-</div>
+            <div>-</div>
+          </td>
+          <td>
+            <div>da</div>
+            <div>R</div>
+          </td>
+          <td>
+            <div>ri</div>
+            <div>S</div>
+          </td>
+          <td>
+            <div>-</div>
+            <div>-</div>
+          </td>
+          <td>
+            <div>Ma</div>
+            <div>S</div>
+          </td>
+          <td>
+            <div>-</div>
+            <div>-</div>
+          </td>
+          <td>
+            <div>ta</div>
+            <div>S</div>
+          </td>
+          <td>
+            <div>-</div>
+            <div>-</div>
+          </td>
+        </tr>
       </tbody>
     </table>
-
-    <div>
-      <button onclick="play()">Play</button>
-      <button onclick="stop()">Stop</button>
-    </div>
 
     <audio id="sam">
       <source src="media/glass.ogg" type="audio/ogg"/>
@@ -100,18 +209,33 @@
 
   var currentMatra = 0;
   var angas = document.getElementById("angas").children;
-  var bols = document.getElementById("bols").children;
   var beats = document.getElementById("beats").children;
+  var bols = document.getElementById("bols").children;
+  var bandish = document.getElementsByClassName("bandish")
+  var bandishLine
+  var lineIndex = 0
   const sam = document.getElementById("sam")
   var loop;
 
-  function setBPM() {
+  function setBandishLine() {
+    if (bandishLine != undefined) bandishLine.classList.toggle("currentline");
+    bandishLine = bandish[lineIndex];
+    bandishLine.classList.toggle("currentline");
+  }
+  setBandishLine()
+
+  function setBpm() {
+    document.getElementById("bpmSlider").value = document.getElementById("bpm").value;
+    if (loop != undefined) play();
+  }
+
+  function setBpmSlider() {
     document.getElementById("bpm").value = document.getElementById("bpmSlider").value;
-    play();
+    if (loop != undefined) play();
   }
 
   function toggleCurrent() {
-    [angas, bols, beats].forEach((cells, i) => {
+    [angas, beats, bols, bandishLine.children].forEach((cells, i) => {
       cells[currentMatra].classList.toggle("current")
     });
   }
@@ -120,8 +244,12 @@
     toggleCurrent();
     if (typeof(i) == "number" && i >= 0 && i < beats.length) { currentMatra = i; }
     else { ++currentMatra == beats.length && (currentMatra = 0); }
+    if (currentMatra == 0) {
+      ++lineIndex == bandish.length && (lineIndex = 0);
+      setBandishLine()
+      loop != undefined && sam.play();
+    }
     toggleCurrent();
-    if (loop != undefined && currentMatra == 0) sam.play();
     return currentMatra;
   }
   
