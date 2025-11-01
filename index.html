@@ -1,0 +1,143 @@
+<!DOCKTYPE html>
+
+<html>
+  <head>
+
+    <style>
+      td {
+          width: 40px;
+          text-align: center;
+      }
+      #angas .current {
+          background-color: lightgreen;
+      }
+      #angas .anga.current.sam {
+          background-color: lightsalmon;
+      }
+      #angas .anga.current.tali {
+          background-color: lightseagreen;
+      }
+      #angas .anga.current.kali {
+          background-color: lightblue;
+      }
+      #beats .current {
+          background-color: lightgreen;
+      }
+      #bols .current {
+          background-color: lightgreen;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <form>
+      <input id="bpmSlider" type="range" min="1" max="300" value="60" onchange="setBPM()"/>
+      <input id="bpm" type="number" min="1" max="300" value="60" onchange="play()"/>
+    </form>
+
+    <table>
+      <tbody>
+        <tr id="angas">
+          <td class="anga sam current">+</td>
+          <td/>
+          <td class="anga kali">o</td>
+          <td/>
+          <td class="anga tali">3</td>
+          <td/>
+          <td class="anga kali">o</td>
+          <td/>
+          <td class="anga tali">5</td>
+          <td/>
+          <td class="anga tali">6</td>
+          <td/>
+        </tr>
+        <tr id="beats">
+          <td class="current">1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>4</td>
+          <td>5</td>
+          <td>6</td>
+          <td>7</td>
+          <td>8</td>
+          <td>9</td>
+          <td>10</td>
+          <td>11</td>
+          <td>12</td>
+        </tr>
+        <tr id="bols">
+          <td class="current">Dha</td>
+          <td>Dha</td>
+          <td>Dhin</td>
+          <td>Ta</td>
+          <td>Ki te</td>
+          <td>Da</td>
+          <td>Dhin</td>
+          <td>Ta</td>
+          <td>Te te</td>
+          <td>Ka te</td>
+          <td>Ga de</td>
+          <td>Ge na</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div>
+      <button onclick="play()">Play</button>
+      <button onclick="stop()">Stop</button>
+    </div>
+
+    <audio id="sam">
+      <source src="media/glass.ogg" type="audio/ogg"/>
+    </audio>
+
+  </body>
+</html>
+
+<script>
+  const intervalBase = 60000;
+
+  var currentMatra = 0;
+  var angas = document.getElementById("angas").children;
+  var bols = document.getElementById("bols").children;
+  var beats = document.getElementById("beats").children;
+  const sam = document.getElementById("sam")
+  var loop;
+
+  function setBPM() {
+    document.getElementById("bpm").value = document.getElementById("bpmSlider").value;
+    play();
+  }
+
+  function toggleCurrent() {
+    [angas, bols, beats].forEach((cells, i) => {
+      cells[currentMatra].classList.toggle("current")
+    });
+  }
+
+  function next(i) {
+    toggleCurrent();
+    if (typeof(i) == "number" && i >= 0 && i < beats.length) { currentMatra = i; }
+    else { ++currentMatra == beats.length && (currentMatra = 0); }
+    toggleCurrent();
+    if (loop != undefined && currentMatra == 0) sam.play();
+    return currentMatra;
+  }
+  
+  function play() {
+    loop && clearInterval(loop);
+    let interval = intervalBase / document.getElementById("bpm").value;
+    if (currentMatra == 0) sam.play();
+    loop = setInterval(next, interval);
+  }
+
+  function stop() {
+    if (loop === undefined) next(0);
+    else {
+      clearInterval(loop);
+      loop = undefined;
+    }
+  }
+
+</script>
