@@ -59,7 +59,7 @@
     <table>
       <tbody>
         <tr id="angas">
-          <td class="anga sam current">+</td>
+          <td class="anga sam">+</td>
           <td/>
           <td class="anga kali">o</td>
           <td/>
@@ -73,7 +73,7 @@
           <td/>
         </tr>
         <tr id="beats">
-          <td class="current">1</td>
+          <td>1</td>
           <td>2</td>
           <td>3</td>
           <td>4</td>
@@ -87,7 +87,7 @@
           <td>12</td>
         </tr>
         <tr id="bols">
-          <td class="current">Dha</td>
+          <td>Dha</td>
           <td>Dha</td>
           <td>Dhin</td>
           <td>Ta</td>
@@ -100,105 +100,131 @@
           <td>Ga de</td>
           <td>Ge na</td>
         </tr>
+
         <tr class="divider"/>
+
         <tr class="bandish">
-          <td class="current">
+          <td>
             <div>A</div>
             <div>P</div>
+            <div>/</div>
           </td>
           <td>
             <div>-</div>
             <div>m</div>
+            <div>-</div>
           </td>
           <td>
             <div>nan</div>
             <div>G</div>
+            <div>-</div>
           </td>
           <td>
             <div>-</div>
             <div>-</div>
+            <div>c</div>
           </td>
           <td>
             <div>di</div>
             <div>G</div>
+            <div>\</div>
           </td>
           <td>
             <div>-</div>
             <div>R</div>
+            <div>-</div>
           </td>
           <td>
             <div>Ja</div>
             <div>S</div>
+            <div>/</div>
           </td>
           <td>
             <div>ga</div>
             <div><u>N</u></div>
+            <div>\</div>
           </td>
           <td>
             <div>-</div>
             <div><u>D</u></div>
+            <div>-</div>
           </td>
           <td>
             <div>Ban</div>
             <div><u>N</u></div>
+            <div>/</div>
           </td>
           <td>
             <div>-</div>
             <div>R</div>
+            <div>-</div>
           </td>
           <td>
             <div>di</div>
             <div>S</div>
+            <div>\</div>
           </td>
         </tr>
         <tr class="bandish">
           <td>
             <div>Tri</div>
             <div>S</div>
+            <div>/</div>
           </td>
           <td>
             <div>pu</div>
             <div>S</div>
+            <div>/</div>
           </td>
           <td>
             <div>ra</div>
             <div>S</div>
+            <div>\</div>
           </td>
           <td>
             <div>Sun</div>
             <div>(R)<u>N</u></div>
+            <div>/</div>
           </td>
           <td>
+            <div>-</div>
             <div>-</div>
             <div>-</div>
           </td>
           <td>
             <div>da</div>
             <div>R</div>
+            <div>-</div>
           </td>
           <td>
             <div>ri</div>
             <div>S</div>
+            <div>/</div>
           </td>
           <td>
             <div>-</div>
             <div>-</div>
+            <div>c</div>
           </td>
           <td>
             <div>Ma</div>
             <div>S</div>
+            <div>/</div>
           </td>
           <td>
             <div>-</div>
             <div>-</div>
+            <div>c</div>
           </td>
           <td>
             <div>ta</div>
             <div>S</div>
+            <div>\</div>
           </td>
           <td>
             <div>-</div>
             <div>-</div>
+            <div>c</div>
           </td>
         </tr>
       </tbody>
@@ -213,23 +239,22 @@
 
 <script>
   const intervalBase = 60000;
+  const sam = document.getElementById("sam")
 
   var currentMatra = 0;
+  var currentLine = 0
   var angas = document.getElementById("angas").children;
   var beats = document.getElementById("beats").children;
   var bols = document.getElementById("bols").children;
   var bandish = document.getElementsByClassName("bandish")
   var bandishLine
-  var lineIndex = 0
-  const sam = document.getElementById("sam")
   var loop;
 
   function setBandishLine() {
     if (bandishLine != undefined) bandishLine.classList.toggle("currentline");
-    bandishLine = bandish[lineIndex];
+    bandishLine = bandish[currentLine];
     bandishLine.classList.toggle("currentline");
   }
-  setBandishLine()
 
   function setBpm() {
     document.getElementById("bpmSlider").value = document.getElementById("bpm").value;
@@ -252,7 +277,7 @@
     if (typeof(i) == "number" && i >= 0 && i < beats.length) { currentMatra = i; }
     else { ++currentMatra == beats.length && (currentMatra = 0); }
     if (currentMatra == 0) {
-      if (i === 0 || (++lineIndex == bandish.length)) lineIndex = 0;
+      if (i === 0 || (++currentLine == bandish.length)) currentLine = 0;
       setBandishLine()
       loop != undefined && sam.play();
     }
@@ -274,5 +299,9 @@
       loop = undefined;
     }
   }
+
+  // init
+  setBandishLine()
+  toggleCurrent()
 
 </script>
