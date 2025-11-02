@@ -25,7 +25,10 @@
           text-align: center;
       }
       tr.divider {
-          height: 10px;
+          height: 20px;
+      }
+      #bols td {
+          border-bottom: 1px solid;
       }
       td.current {
           background-color: lightgreen;
@@ -116,7 +119,7 @@
 
         <tr class="divider"/>
 
-        <tr class="bandish">
+        <tr class="bandish active">
           <td class="sam">
             <div>A</div>
             <div>P</div>
@@ -177,8 +180,12 @@
             <div>S</div>
             <div>\</div>
           </td>
+          <td><input type="checkbox" checked onchange="setActive(this)"/></td>
         </tr>
-        <tr class="bandish">
+
+        <tr class="divider"/>
+
+        <tr class="bandish active">
           <td class="sam">
             <div>Tri</div>
             <div>S</div>
@@ -239,6 +246,7 @@
             <div>-</div>
             <div>c</div>
           </td>
+          <td><input type="checkbox" checked onchange="setActive(this)"/></td>
         </tr>
       </tbody>
     </table>
@@ -266,8 +274,8 @@
   var angas = document.getElementById("angas").children;
   var beats = document.getElementById("beats").children;
   var bols = document.getElementById("bols").children;
-  var bandish = document.getElementsByClassName("bandish")
-  var bandishLine
+  var bandish = document.getElementsByClassName("bandish active");
+  var bandishLine;
   var loop;
 
   function setBandishLine() {
@@ -319,6 +327,16 @@
       clearInterval(loop);
       loop = undefined;
     }
+    setBandishLine();
+  }
+
+  function setActive(e) {
+    let line = e.parentNode.parentNode;
+    if (e.checked) line.classList.add("active");
+    else line.classList.remove("active");
+    toggleCurrent();
+    setBandishLine();
+    toggleCurrent();
   }
 
   function triggerSound(aObj) {
@@ -327,7 +345,7 @@
   }
 
   // init
-  setBandishLine()
-  toggleCurrent()
+  setBandishLine();
+  toggleCurrent();
 
 </script>

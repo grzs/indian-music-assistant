@@ -1,0 +1,1 @@
+* TODO handle when all bandish line becomes inactive
