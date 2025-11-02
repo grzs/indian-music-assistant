@@ -7,15 +7,25 @@
       #controls {
           margin-bottom: 10px;
       }
-      #controls form {
-          width: 350px;
-          height: 40px;
-      }
       #transport {
           margin-bottom: 10px;
       }
+      #tempo-controls {
+          width: 500px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          margin-bottom: 10px;
+      }
+      #bpm-container {
+      }
+      #multiplier-container {
+      }
       #sounds {
-          float: right;
+      }
+
+      table {
+          float: left;
       }
       table, td {
           border-collapse: collapse;
@@ -24,7 +34,7 @@
           width: 40px;
           text-align: center;
       }
-      tr.divider {
+      tr.separator {
           height: 20px;
       }
       #bols td {
@@ -51,25 +61,36 @@
 
   <body>
     <div id="controls">
+
       <div id="transport">
         <button onclick="play()">Play</button>
         <button onclick="stop()">Stop</button>
+        <button onclick="reset()">Rewind</button>
       </div>
 
-      <form>
-        <input id="bpm" type="number" min="1" max="300" value="60" onchange="setBpm()"/>
-        <label for="bpm">BPM</label>
-        <input id="bpmSlider" type="range" min="1" max="300" value="60" onchange="setBpmSlider()"/>
-
-        <div id="sounds">
-          <div>
-            <input type="checkbox" id="cb-chime"/><label for="cb-chime">chime</label>
-          </div>
-          <div>
-            <input type="checkbox" id="cb-click"/><label for="cb-click">click</label>
-          </div>
+      <div id="tempo-controls">
+        <div id="bpm-container">
+          <input id="bpm" type="number" min="1" max="300" value="60" onchange="setBpm()"/>
+          <label for="bpm">BPM</label>
+          <input id="bpmSlider" type="range" min="1" max="300" value="60" onchange="setBpmSlider()"/>
         </div>
-      </form>
+        <div id="multiplier-container">
+          <label for="multiplier">X</label>
+          <input id="multiplier" type="number" min="1" max="9" value="1">
+          <label for="divider">/</label>
+          <input id="divider" type="number" min="1" max="4" value="1">
+        </div>
+      </div>
+
+      <div id="sounds">
+        <div>
+          <input type="checkbox" id="cb-chime"/><label for="cb-chime">chime</label>
+        </div>
+        <div>
+          <input type="checkbox" id="cb-click"/><label for="cb-click">click</label>
+        </div>
+      </div>
+
     </div>
 
     <table>
@@ -88,39 +109,61 @@
           <td class="tali">6</td>
           <td/>
         </tr>
-        <tr id="beats">
-          <td class="sam">1</td>
-          <td>2</td>
-          <td class="kali">3</td>
-          <td>4</td>
-          <td class="tali">5</td>
-          <td>6</td>
-          <td class="kali">7</td>
-          <td>8</td>
-          <td class="tali">9</td>
-          <td>10</td>
-          <td class="tali">11</td>
-          <td>12</td>
-        </tr>
         <tr id="bols">
-          <td class="sam">Dha</td>
-          <td>Dha</td>
-          <td class="kali">Dhin</td>
-          <td>Ta</td>
-          <td class="tali">Ki te</td>
-          <td>Da</td>
-          <td class="kali">Dhin</td>
-          <td>Ta</td>
-          <td class="tali">Te te</td>
-          <td>Ka te</td>
-          <td class="tali">Ga de</td>
-          <td>Ge na</td>
+          <td class="sam">
+            <div>Dha</div>
+            <div>1</div>
+          </td>
+          <td>
+            <div>Dha</div>
+            <div>2</div>
+          </td>
+          <td class="kali">
+            <div>Dhin</div>
+            <div>3</div>
+          </td>
+          <td>
+            <div>Ta</div>
+            <div>4</div>
+          </td>
+          <td class="tali">
+            <div>Ki te</div>
+            <div>5</div>
+          </td>
+          <td>
+            <div>Da</div>
+            <div>6</div>
+          </td>
+          <td class="kali">
+            <div>Dhin</div>
+            <div>7</div>
+          </td>
+          <td>
+            <div>Ta</div>
+            <div>8</div>
+          </td>
+          <td class="tali">
+            <div>Te te</div>
+            <div>9</div>
+          </td>
+          <td>
+            <div>Ka te</div>
+            <div>10</div>
+          </td>
+          <td class="tali">
+            <div>Ga de</div>
+            <div>11</div>
+          </td>
+          <td>
+            <div>Ge na</div>
+            <div>12</div>
+          </td>
         </tr>
 
-        <tr class="divider"/>
+        <tr class="separator"/>
 
         <tr class="bandish active">
-          <td class="sam">
+          <td>
             <div>A</div>
             <div>P</div>
             <div>/</div>
@@ -130,7 +173,7 @@
             <div>m</div>
             <div>-</div>
           </td>
-          <td class="kali">
+          <td>
             <div>nan</div>
             <div>G</div>
             <div>-</div>
@@ -140,7 +183,7 @@
             <div>-</div>
             <div>c</div>
           </td>
-          <td class="tali">
+          <td>
             <div>di</div>
             <div>G</div>
             <div>\</div>
@@ -150,7 +193,7 @@
             <div>R</div>
             <div>-</div>
           </td>
-          <td class="kali">
+          <td>
             <div>Ja</div>
             <div>S</div>
             <div>/</div>
@@ -160,7 +203,7 @@
             <div><u>N</u></div>
             <div>\</div>
           </td>
-          <td class="tali">
+          <td>
             <div>-</div>
             <div><u>D</u></div>
             <div>-</div>
@@ -170,7 +213,7 @@
             <div><u>N</u></div>
             <div>/</div>
           </td>
-          <td class="tali">
+          <td>
             <div>-</div>
             <div>R</div>
             <div>-</div>
@@ -180,13 +223,13 @@
             <div>S</div>
             <div>\</div>
           </td>
-          <td><input type="checkbox" checked onchange="setActive(this)"/></td>
+          <!-- <td><input type="checkbox" checked onchange="setActive(this)"/></td> -->
         </tr>
 
-        <tr class="divider"/>
+        <tr class="separator"/>
 
         <tr class="bandish active">
-          <td class="sam">
+          <td>
             <div>Tri</div>
             <div>S</div>
             <div>/</div>
@@ -196,7 +239,7 @@
             <div>S</div>
             <div>/</div>
           </td>
-          <td class="kali">
+          <td>
             <div>ra</div>
             <div>S</div>
             <div>\</div>
@@ -206,7 +249,7 @@
             <div>(R)<u>N</u></div>
             <div>/</div>
           </td>
-          <td class="tali">
+          <td>
             <div>-</div>
             <div>-</div>
             <div>-</div>
@@ -216,7 +259,7 @@
             <div>R</div>
             <div>-</div>
           </td>
-          <td class="kali">
+          <td>
             <div>ri</div>
             <div>S</div>
             <div>/</div>
@@ -226,7 +269,7 @@
             <div>-</div>
             <div>c</div>
           </td>
-          <td class="tali">
+          <td>
             <div>Ma</div>
             <div>S</div>
             <div>/</div>
@@ -236,7 +279,7 @@
             <div>-</div>
             <div>c</div>
           </td>
-          <td class="tali">
+          <td>
             <div>ta</div>
             <div>S</div>
             <div>\</div>
@@ -246,7 +289,7 @@
             <div>-</div>
             <div>c</div>
           </td>
-          <td><input type="checkbox" checked onchange="setActive(this)"/></td>
+          <!-- <td><input type="checkbox" checked onchange="setActive(this)"/></td> -->
         </tr>
       </tbody>
     </table>
@@ -270,75 +313,116 @@
   const cbClick = document.getElementById("cb-click")
 
   var currentMatra = 0;
-  var currentLine = 0
+  var currentMatraBandish = 0;
+  var currentLine = 0;
   var angas = document.getElementById("angas").children;
-  var beats = document.getElementById("beats").children;
   var bols = document.getElementById("bols").children;
   var bandish = document.getElementsByClassName("bandish active");
-  var bandishLine;
+  var bandishMatras = bandish[currentLine].children;
   var loop;
-
-  function setBandishLine() {
-    if (bandishLine != undefined) bandishLine.classList.toggle("currentline");
-    bandishLine = bandish[currentLine];
-    bandishLine.classList.toggle("currentline");
-  }
+  var multiplier = 1
+  var multiplierCounter = multiplier;
+  var divider = 1
+  var dividerCounter = divider;
 
   function setBpm() {
     document.getElementById("bpmSlider").value = document.getElementById("bpm").value;
-    if (loop != undefined) play();
+    play();
   }
 
   function setBpmSlider() {
     document.getElementById("bpm").value = document.getElementById("bpmSlider").value;
-    if (loop != undefined) play();
+    play();
   }
 
-  function toggleCurrent() {
-    [angas, beats, bols, bandishLine.children].forEach((cells, i) => {
-      cells[currentMatra].classList.toggle("current")
-    });
+  function nextBandishLine(i) {
+    bandish[currentLine].classList.contains("currentline") &&
+      bandish[currentLine].classList.toggle("currentline");
+
+    if (i >= 0 && i < bandish.length) { currentLine = i; }
+    else { ++currentLine >= bandish.length && (currentLine = 0); }
+
+    bandish[currentLine].classList.toggle("currentline");
+    bandishMatras = bandish[currentLine].children;
+
+    return currentLine;
   }
 
-  function next(i) {
-    toggleCurrent();
-    if (typeof(i) == "number" && i >= 0 && i < beats.length) { currentMatra = i; }
-    else { ++currentMatra == beats.length && (currentMatra = 0); }
-    if (currentMatra == 0) {
-      if (i === 0 || (++currentLine == bandish.length)) currentLine = 0;
-      setBandishLine()
-      loop != undefined && cbChime.checked && triggerSound(sam);
-    }
-    loop != undefined && cbClick.checked && triggerSound(click);
-    toggleCurrent();
+  function next(x, y) {
+    nextTaalMatra(x);
+    nextBandishMatra(x, y);
+  }
+
+  function nextTaalMatra(i) {
+    if (multiplierCounter == multiplier) {
+      bols[currentMatra].classList.contains("current") &&
+        bols[currentMatra].classList.toggle("current");
+
+      // set currentMatra to i or the next one
+      if (i >= 0 && i < bols.length) { currentMatra = i; }
+      else { ++currentMatra >= bols.length && (currentMatra = 0); }
+
+      // highlight current one
+      bols[currentMatra].classList.toggle("current");
+
+      // sounds
+      if (loop != undefined) {
+        cbClick.checked && triggerSound(click);
+        currentMatra == 0 && cbChime.checked && triggerSound(sam);
+      }
+
+      multiplierCounter = 1;
+    } else multiplierCounter++;
+
     return currentMatra;
   }
   
+  function nextBandishMatra(x, y) {
+    if (dividerCounter == divider) {
+      bandishMatras[currentMatraBandish].classList.contains("current") &&
+        bandishMatras[currentMatraBandish].classList.toggle("current");
+      
+      // set currentMatraBandish to i or the next one
+      if (x >= 0 && x < bandishMatras.length) { currentMatraBandish = x; }
+      else { ++currentMatraBandish >= bandishMatras.length && (currentMatraBandish = 0); }
+
+      // go to next line when reached the end of line
+      currentMatraBandish == 0 && nextBandishLine(y);
+
+      // highlight current one
+      bandishMatras[currentMatraBandish].classList.toggle("current");
+
+      dividerCounter = 1;
+    } else dividerCounter++;
+
+    return currentMatraBandish;
+  }
+
   function play() {
     loop && clearInterval(loop);
-    let interval = intervalBase / document.getElementById("bpm").value;
-    currentMatra == 0 && cbChime.checked && triggerSound(sam);
+    multiplier = document.getElementById("multiplier").value;
+    divider = document.getElementById("divider").value;
+
+    let interval = intervalBase / (document.getElementById("bpm").value * multiplier);
     loop = setInterval(next, interval);
   }
 
   function stop() {
-    if (loop === undefined) next(0);
+    if (loop === undefined) reset();
     else {
       clearInterval(loop);
       loop = undefined;
     }
-    setBandishLine();
   }
 
   function setActive(e) {
     let line = e.parentNode.parentNode;
     if (e.checked) line.classList.add("active");
     else line.classList.remove("active");
-    toggleCurrent();
-    setBandishLine();
-    toggleCurrent();
+
+    // TODO: incorporate it to next() or init()
     stop();
-    stop();
+    reset();
   }
 
   function triggerSound(aObj) {
@@ -346,8 +430,10 @@
     else aObj.currentTime = 0;                               // playing
   }
 
-  // init
-  setBandishLine();
-  toggleCurrent();
+  function reset() {
+    next(0, 0);
+  }
+
+  reset()
 
 </script>
