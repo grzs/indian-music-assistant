@@ -52,8 +52,17 @@
       td.current.kali {
           background-color: lightblue;
       }
-      .bandish.currentline {
+      .bandish.currentline td {
           background-color: lightgray;
+      }
+      .bandish.currentline td.current {
+          background-color: lightgreen;
+      }
+      tr.bandish td {
+          color: gray;
+      }
+      tr.bandish.active td {
+          color: unset;
       }
     </style>
 
@@ -223,7 +232,7 @@
             <div>S</div>
             <div>\</div>
           </td>
-          <!-- <td><input type="checkbox" checked onchange="setActive(this)"/></td> -->
+          <th><input type="checkbox" checked onchange="setActive(this)"/></th>
         </tr>
 
         <tr class="separator"/>
@@ -289,7 +298,7 @@
             <div>-</div>
             <div>c</div>
           </td>
-          <!-- <td><input type="checkbox" checked onchange="setActive(this)"/></td> -->
+          <th><input type="checkbox" checked onchange="setActive(this)"/></th>
         </tr>
       </tbody>
     </table>
@@ -311,19 +320,19 @@
   const click = document.getElementById("click")
   const cbChime = document.getElementById("cb-chime")
   const cbClick = document.getElementById("cb-click")
+  const angas = document.getElementById("angas").children;
+  const bols = document.getElementById("bols").children;
 
-  var currentMatra = 0;
-  var currentMatraBandish = 0;
-  var currentLine = 0;
-  var angas = document.getElementById("angas").children;
-  var bols = document.getElementById("bols").children;
-  var bandish = document.getElementsByClassName("bandish active");
-  var bandishMatras = bandish[currentLine].children;
-  var loop;
   var multiplier = 1
   var multiplierCounter = multiplier;
   var divider = 1
   var dividerCounter = divider;
+  var currentMatra = 0;
+  var currentMatraBandish = 0;
+  var currentLine = 0;
+  var bandish;
+  var bandishMatras;
+  var loop;
 
   function setBpm() {
     document.getElementById("bpmSlider").value = document.getElementById("bpm").value;
@@ -343,7 +352,7 @@
     else { ++currentLine >= bandish.length && (currentLine = 0); }
 
     bandish[currentLine].classList.toggle("currentline");
-    bandishMatras = bandish[currentLine].children;
+    bandishMatras = bandish[currentLine].getElementsByTagName("td");
 
     return currentLine;
   }
@@ -431,6 +440,18 @@
   }
 
   function reset() {
+    // TODO: it could be better ...
+    let currentCells = Array.from(document.getElementsByClassName("current"));
+    let currentLines = Array.from(document.getElementsByClassName("currentline"));
+    currentCells.forEach(td => {
+      td.classList.remove("current");
+    });
+    currentLines.forEach(tr => {
+      tr.classList.remove("currentline");
+    });
+    
+    bandish = document.getElementsByClassName("bandish active");
+    bandishMatras = bandish[currentLine].getElementsByTagName("td");
     next(0, 0);
   }
 
