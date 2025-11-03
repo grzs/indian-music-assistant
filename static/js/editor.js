@@ -57,6 +57,15 @@ function newBandishLine(lineData = []) {
   return newLine;
 }
 
+function renderBandish(lines) {
+  clearBandish();
+  for (line of lines) onAddLine(line);
+
+  cbEdit.checked = false;
+  onEditToggle();
+  reset();
+}
+
 function onAddLine(lineData = []) {
   editRow.insertAdjacentElement("beforebegin", newBandishLine(lineData));
   editRow.insertAdjacentElement("beforebegin", newSeparator());

@@ -1,1 +1,4 @@
 * TODO handle when all bandish line becomes inactive
+* TODO fastapi server with mongodb storage
+* TODO save API server address to cookie
+* TODO login page

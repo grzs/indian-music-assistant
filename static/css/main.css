@@ -1,38 +1,6 @@
-/* control panel */
-#controls {
-    margin-bottom: 10px;
-}
-#transport {
-    margin-bottom: 10px;
-}
-#tempo-controls {
-    width: 420px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-#bpm {
-    width: 50px;
-}
-#multiplier-container input {
-    width: 30px;
-}
-#bpm-container {
-}
-#multiplier-container {
-}
-#sounds {
-}
-
-/* general */
-.hidden {
-    display: none;
-}
-
 /* table */
-table {
-    float: left;
+#bandish-container {
+    margin-bottom: 10px;
 }
 table, td {
     border-collapse: collapse;
@@ -73,13 +41,4 @@ tr.bandish td {
 }
 tr.bandish.active td {
     color: unset;
-}
-
-/* edit mode */
-.edit-button {
-    padding: 5px;
-    border: 1px solid black;
-}
-tr.bandish td .edit {
-    width: 40px;
 }

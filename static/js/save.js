@@ -47,7 +47,7 @@ async function readFile() {
   return fileData;
 }
 
-async function saveBandish() {
+async function onExportClick() {
   let fileHandle = await window.showSaveFilePicker(filePickerOpts);
   await writeFile(
     fileHandle, 
@@ -55,20 +55,14 @@ async function saveBandish() {
   );
 }
 
-function loadBandish() {
+function onLoadClick() {
   stop();
   reset();
   readFile().then(f => reader.readAsText(f));
 }
 
 function onBandishDataLoaded() {
-  let bandishData = JSON.parse(reader.result);
-
-  clearBandish();
-  for (line of bandishData) onAddLine(line);
-
-  cbEdit.checked = false;
-  onEditToggle();
-  reset();
+  let lines = JSON.parse(reader.result);
+  renderBandish(lines)
 }
 reader.addEventListener("load", onBandishDataLoaded);

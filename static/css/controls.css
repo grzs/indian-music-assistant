@@ -1,0 +1,27 @@
+/* control panel */
+#controls {
+    margin-bottom: 10px;
+}
+#transport {
+    margin-bottom: 10px;
+}
+#tempo-controls {
+    width: 420px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+#bpm {
+    width: 50px;
+}
+#multiplier-container input {
+    width: 30px;
+}
+#bpm-container {
+}
+#multiplier-container {
+}
+#sounds {
+}
+

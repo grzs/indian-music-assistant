@@ -5,9 +5,12 @@
     <title>Indian Music Tutor</title>
     <meta name="author" content="Janos Gerzson" />
     <link href="static/css/main.css" rel="stylesheet" />
+    <link href="static/css/controls.css" rel="stylesheet" />
+    <link href="static/css/editor.css" rel="stylesheet" />
     <script type="text/javascript" src="static/js/main.js"></script>
     <script type="text/javascript" src="static/js/editor.js"></script>
     <script type="text/javascript" src="static/js/save.js"></script>
+    <script type="text/javascript" src="static/js/client.js"></script>
   </head>
   <body>
     <div id="controls">
@@ -44,7 +47,7 @@
 
     </div>
 
-    <table>
+    <table id="bandish-container">
       <tbody>
         <tr id="angas">
           <td class="sam">+</td>
@@ -119,12 +122,31 @@
             <label for="cb-edit">edit</label>
           </td>
           <td colspan="3">
-            <button class="show" onclick="loadBandish()">Load</button>
-            <button class="show" onclick="saveBandish()">Save</button>
+            <button class="show" onclick="onLoadClick()">Import</button>
+            <button class="show" onclick="onExportClick()">Export</button>
             <button id="bt-add-line" class="edit hidden" onclick="onAddLine()">+</button>
         </tr>
       </tbody>
     </table>
+
+    <div id="loader">
+      <div id="url-div">
+        <label for="url-input">URL:</label>
+        <input type="text" id="url-input" onchange="onURLChange()" value="http://localhost:8000"/>
+      </div>
+
+      <div id="lister">
+        <button id="list-btn" onclick="onListBtnClick()">Refresh list</button>
+        <select name="list-dropdown" id="list-dropdown">
+          <option value="">---</option>
+        </select>
+      </div>
+
+      <div id="loader-buttons">
+        <button class="show" onclick="onLoadClick()">Load</button>
+        <button class="show" onclick="onSaveClick()">Save</button>
+      </div>
+    </div>
 
     <audio id="sam">
       <source src="media/glass.ogg" type="audio/ogg" />
@@ -149,6 +171,8 @@
   const editRow = document.getElementById("edit-row");
   const cbEdit = document.getElementById("cb-edit");
   const btAddLine = document.getElementById("bt-add-line");
+  const urlInput = document.getElementById("url-input");
+  const listDropdown = document.getElementById("list-dropdown");
 
   reset();
 </script>
