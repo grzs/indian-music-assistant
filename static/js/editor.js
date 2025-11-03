@@ -57,8 +57,8 @@ function newBandishLine(lineData = []) {
   return newLine;
 }
 
-function onAddLine() {
-  editRow.insertAdjacentElement("beforebegin", newBandishLine());
+function onAddLine(lineData = []) {
+  editRow.insertAdjacentElement("beforebegin", newBandishLine(lineData));
   editRow.insertAdjacentElement("beforebegin", newSeparator());
 }
 

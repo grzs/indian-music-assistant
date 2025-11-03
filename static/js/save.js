@@ -63,6 +63,12 @@ function loadBandish() {
 
 function onBandishDataLoaded() {
   let bandishData = JSON.parse(reader.result);
-  console.log(bandishData);
+
+  clearBandish();
+  for (line of bandishData) onAddLine(line);
+
+  cbEdit.checked = false;
+  onEditToggle();
+  reset();
 }
 reader.addEventListener("load", onBandishDataLoaded);
