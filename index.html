@@ -6,6 +6,8 @@
     <meta name="author" content="Janos Gerzson" />
     <link href="static/css/main.css" rel="stylesheet" />
     <script type="text/javascript" src="static/js/main.js"></script>
+    <script type="text/javascript" src="static/js/editor.js"></script>
+    <script type="text/javascript" src="static/js/save.js"></script>
   </head>
   <body>
     <div id="controls">
@@ -253,9 +255,10 @@
             <input type="checkbox" id="cb-edit" onchange="onEditToggle()"/>
             <label for="cb-edit">edit</label>
           </td>
-          <td>
+          <td colspan="3">
+            <button class="show" onclick="loadBandish()">Load</button>
+            <button class="show" onclick="saveBandish()">Save</button>
             <button id="bt-add-line" class="edit hidden" onclick="onAddLine()">+</button>
-          </td>
         </tr>
       </tbody>
     </table>
