@@ -104,7 +104,7 @@
             <div>11</div>
           </td>
           <td>
-            <div>Ge na</div>
+            <div>Ga na</div>
             <div>12</div>
           </td>
         </tr>
@@ -242,19 +242,19 @@
           </td>
           <th>
             <input type="checkbox" checked onchange="setActive(this)" class="show"/>
-            <button class="edit hidden">-</button>
+            <button class="edit hidden" onclick="onRemoveLine(this)">-</button>
           </th>
         </tr>
 
         <tr class="separator"/>
 
-        <tr>
+        <tr id="edit-row">
           <td class="edit-button" colspan="2">
             <input type="checkbox" id="cb-edit" onchange="onEditToggle()"/>
             <label for="cb-edit">edit</label>
           </td>
           <td>
-            <button class="edit hidden" onclick="addLine()">+</button>
+            <button id="bt-add-line" class="edit hidden" onclick="onAddLine()">+</button>
           </td>
         </tr>
       </tbody>
@@ -280,7 +280,9 @@
   const cbClick = document.getElementById("cb-click");
   const angas = document.getElementById("angas").children;
   const bols = document.getElementById("bols").children;
+  const editRow = document.getElementById("edit-row");
   const cbEdit = document.getElementById("cb-edit");
+  const btAddLine = document.getElementById("bt-add-line");
 
   reset();
 </script>
