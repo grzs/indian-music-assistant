@@ -336,12 +336,12 @@
 
   function setBpm() {
     document.getElementById("bpmSlider").value = document.getElementById("bpm").value;
-    play();
+    loop != undefined && play();
   }
 
   function setBpmSlider() {
     document.getElementById("bpm").value = document.getElementById("bpmSlider").value;
-    play();
+    loop != undefined && play();
   }
 
   function nextBandishLine(i) {
