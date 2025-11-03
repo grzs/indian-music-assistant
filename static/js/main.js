@@ -1,3 +1,6 @@
+const parser = new DOMParser();
+const allowedTags = ["U", "B", "I"];
+
 var multiplier, multiplierCounter;
 var divider, dividerCounter;
 
@@ -15,9 +18,7 @@ function next(x, y) {
 
 function nextTaalMatra(i) {
   if (multiplierCounter >= multiplier) {
-    bols[currentMatra] != undefined &&
-      bols[currentMatra].classList.contains("current") &&
-      bols[currentMatra].classList.toggle("current");
+    bols[currentMatra] != undefined && bols[currentMatra].classList.remove("current");
 
     // set currentMatra to i or the next one
     if (i >= 0 && i < bols.length) currentMatra = i;
@@ -43,9 +44,7 @@ function nextTaalMatra(i) {
 
 function nextBandishMatra(x, y) {
   if (dividerCounter >= divider) {
-    bandishMatras[currentMatraBandish] != undefined &&
-      bandishMatras[currentMatraBandish].classList.contains("current") &&
-      bandishMatras[currentMatraBandish].classList.toggle("current");
+    bandishMatras[currentMatraBandish] != undefined && bandishMatras[currentMatraBandish].classList.remove("current");
 
     // set currentMatraBandish to i or the next one
     if (x >= 0 && x < bandishMatras.length) currentMatraBandish = x;
@@ -64,9 +63,7 @@ function nextBandishMatra(x, y) {
 }
 
 function nextBandishLine(i) {
-  bandish[currentLine] !=  undefined &&
-    bandish[currentLine].classList.contains("currentline") &&
-    bandish[currentLine].classList.toggle("currentline");
+  bandish[currentLine] !=  undefined && bandish[currentLine].classList.remove("currentline");
 
   if (i >= 0 && i < bandish.length) { currentLine = i; }
   else { ++currentLine >= bandish.length && (currentLine = 0); }
@@ -96,15 +93,20 @@ function reset() {
   bandishMatras = [];
 }
 
-function stop() {
+function _stop() {
   if (loop != undefined) {
     clearInterval(loop);
     loop = undefined;
   }
 }
 
+function stop() {
+  cbPlay.checked = false;
+  _stop();
+}
+
 function play() {
-  stop();
+  _stop();
   multiplier = document.getElementById("multiplier").value;
   multiplierCounter = 1;
   divider = document.getElementById("divider").value;
@@ -112,6 +114,8 @@ function play() {
 
   let interval = intervalBase / (document.getElementById("bpm").value * multiplier);
   loop = setInterval(next, interval);
+
+  cbPlay.checked = true;
 }
 
 function triggerSound(aObj) {
@@ -140,7 +144,32 @@ function setBpmSlider() {
   loop != undefined && play();
 }
 
-function onPlayChange(e) {
-  if (e.checked) play();
-  else stop();
+function onPlayChange() {
+  if (cbPlay.checked) play();
+  else _stop();
+}
+
+function onEditToggle() {
+  let visible = cbEdit.checked;
+  Array.from(document.getElementsByClassName("edit"), tag => {
+    if (visible) tag.classList.remove("hidden");
+    else tag.classList.add("hidden");
+  });
+  Array.from(document.getElementsByClassName("show"), tag => {
+    if (visible) tag.classList.add("hidden");
+    else tag.classList.remove("hidden");
+  });
+}
+
+function onMatraChange(matraInput) {
+  let body = parser.parseFromString(matraInput.value, "text/html")["body"];
+
+  // inputvalidation for HTML input
+  // TODO: validate with TrustedTypesPolicy
+  // https://developer.mozilla.org/en-US/docs/Web/API/TrustedTypePolicy
+  Array.from(body.children).forEach(tag => {
+    if (! allowedTags.includes(tag.tagName)) tag.remove();
+  });
+
+  matraInput.value = matraInput.previousSibling.innerHTML = body.innerHTML;
 }

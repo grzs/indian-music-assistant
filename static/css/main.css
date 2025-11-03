@@ -25,6 +25,11 @@
 #sounds {
 }
 
+/* general */
+.hidden {
+    display: none;
+}
+
 /* table */
 table {
     float: left;
@@ -38,6 +43,9 @@ td {
 }
 tr.separator {
     height: 20px;
+}
+tr.bandish {
+    height: 65px;
 }
 #bols td {
     border-bottom: 1px solid;
@@ -65,4 +73,13 @@ tr.bandish td {
 }
 tr.bandish.active td {
     color: unset;
+}
+
+/* edit mode */
+.edit-button {
+    padding: 5px;
+    border: 1px solid black;
+}
+tr.bandish td .edit {
+    width: 40px;
 }

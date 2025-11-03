@@ -11,7 +11,7 @@
     <div id="controls">
 
       <div id="transport">
-        <input id="play" type="checkbox" onchange="onPlayChange(this)"/><label for="play">Play</label>
+        <input id="cb-play" type="checkbox" onchange="onPlayChange()"/><label for="cb-play">Play</label>
         <!-- <button onclick="play()">Play</button> -->
         <!-- <button onclick="stop()">Stop</button> -->
         <button onclick="reset()">Reset</button>
@@ -172,7 +172,9 @@
             <div>S</div>
             <div>\</div>
           </td>
-          <th><input type="checkbox" checked onchange="setActive(this)"/></th>
+          <th>
+            <input type="checkbox" checked onchange="setActive(this)"/>
+          </th>
         </tr>
 
         <tr class="separator"/>
@@ -234,11 +236,26 @@
             <div>\</div>
           </td>
           <td>
-            <div>-</div>
-            <div>-</div>
-            <div>c</div>
+            <div class="show">-</div><input type="text" value="-" onchange="onMatraChange(this)" class="edit hidden"/>
+            <div class="show">-</div><input type="text" value="-" onchange="onMatraChange(this)" class="edit hidden"/>
+            <div class="show">c</div><input type="text" value="c" onchange="onMatraChange(this)" class="edit hidden"/>
           </td>
-          <th><input type="checkbox" checked onchange="setActive(this)"/></th>
+          <th>
+            <input type="checkbox" checked onchange="setActive(this)" class="show"/>
+            <button class="edit hidden">-</button>
+          </th>
+        </tr>
+
+        <tr class="separator"/>
+
+        <tr>
+          <td class="edit-button" colspan="2">
+            <input type="checkbox" id="cb-edit" onchange="onEditToggle()"/>
+            <label for="cb-edit">edit</label>
+          </td>
+          <td>
+            <button class="edit hidden" onclick="addLine()">+</button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -255,6 +272,7 @@
 </html>
 
 <script>
+  const cbPlay = document.getElementById("cb-play");
   const intervalBase = 60000;
   const sam = document.getElementById("sam");
   const click = document.getElementById("click");
@@ -262,6 +280,7 @@
   const cbClick = document.getElementById("cb-click");
   const angas = document.getElementById("angas").children;
   const bols = document.getElementById("bols").children;
+  const cbEdit = document.getElementById("cb-edit");
 
   reset();
 </script>
