@@ -2,79 +2,18 @@
 
 <html>
   <head>
-
-    <style>
-      #controls {
-          margin-bottom: 10px;
-      }
-      #transport {
-          margin-bottom: 10px;
-      }
-      #tempo-controls {
-          width: 500px;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          margin-bottom: 10px;
-      }
-      #bpm-container {
-      }
-      #multiplier-container {
-      }
-      #sounds {
-      }
-
-      table {
-          float: left;
-      }
-      table, td {
-          border-collapse: collapse;
-      }
-      td {
-          width: 40px;
-          text-align: center;
-      }
-      tr.separator {
-          height: 20px;
-      }
-      #bols td {
-          border-bottom: 1px solid;
-      }
-      td.current {
-          background-color: lightgreen;
-      }
-      td.current.sam {
-          background-color: lightsalmon;
-      }
-      td.current.tali {
-          background-color: lightseagreen;
-      }
-      td.current.kali {
-          background-color: lightblue;
-      }
-      .bandish.currentline td {
-          background-color: lightgray;
-      }
-      .bandish.currentline td.current {
-          background-color: lightgreen;
-      }
-      tr.bandish td {
-          color: gray;
-      }
-      tr.bandish.active td {
-          color: unset;
-      }
-    </style>
-
+    <title>Indian Music Tutor</title>
+    <meta name="author" content="Janos Gerzson" />
+    <link href="static/css/main.css" rel="stylesheet" />
+    <script type="text/javascript" src="static/js/main.js"></script>
   </head>
-
   <body>
     <div id="controls">
 
       <div id="transport">
         <button onclick="play()">Play</button>
         <button onclick="stop()">Stop</button>
-        <button onclick="reset()">Rewind</button>
+        <button onclick="reset()">Reset</button>
       </div>
 
       <div id="tempo-controls">
@@ -304,11 +243,11 @@
     </table>
 
     <audio id="sam">
-      <source src="media/glass.ogg" type="audio/ogg"/>
+      <source src="media/glass.ogg" type="audio/ogg" />
     </audio>
 
     <audio id="click">
-      <source src="media/click.ogg" type="audio/ogg"/>
+      <source src="media/click.ogg" type="audio/ogg" />
     </audio>
 
   </body>
@@ -316,145 +255,12 @@
 
 <script>
   const intervalBase = 60000;
-  const sam = document.getElementById("sam")
-  const click = document.getElementById("click")
-  const cbChime = document.getElementById("cb-chime")
-  const cbClick = document.getElementById("cb-click")
+  const sam = document.getElementById("sam");
+  const click = document.getElementById("click");
+  const cbChime = document.getElementById("cb-chime");
+  const cbClick = document.getElementById("cb-click");
   const angas = document.getElementById("angas").children;
   const bols = document.getElementById("bols").children;
 
-  var multiplier = 1
-  var multiplierCounter = multiplier;
-  var divider = 1
-  var dividerCounter = divider;
-  var currentMatra = 0;
-  var currentMatraBandish = 0;
-  var currentLine = 0;
-  var bandish;
-  var bandishMatras;
-  var loop;
-
-  function setBpm() {
-    document.getElementById("bpmSlider").value = document.getElementById("bpm").value;
-    loop != undefined && play();
-  }
-
-  function setBpmSlider() {
-    document.getElementById("bpm").value = document.getElementById("bpmSlider").value;
-    loop != undefined && play();
-  }
-
-  function nextBandishLine(i) {
-    bandish[currentLine].classList.contains("currentline") &&
-      bandish[currentLine].classList.toggle("currentline");
-
-    if (i >= 0 && i < bandish.length) { currentLine = i; }
-    else { ++currentLine >= bandish.length && (currentLine = 0); }
-
-    bandish[currentLine].classList.toggle("currentline");
-    bandishMatras = bandish[currentLine].getElementsByTagName("td");
-
-    return currentLine;
-  }
-
-  function next(x, y) {
-    nextTaalMatra(x);
-    nextBandishMatra(x, y);
-  }
-
-  function nextTaalMatra(i) {
-    if (multiplierCounter == multiplier) {
-      bols[currentMatra].classList.contains("current") &&
-        bols[currentMatra].classList.toggle("current");
-
-      // set currentMatra to i or the next one
-      if (i >= 0 && i < bols.length) { currentMatra = i; }
-      else { ++currentMatra >= bols.length && (currentMatra = 0); }
-
-      // highlight current one
-      bols[currentMatra].classList.toggle("current");
-
-      // sounds
-      if (loop != undefined) {
-        cbClick.checked && triggerSound(click);
-        currentMatra == 0 && cbChime.checked && triggerSound(sam);
-      }
-
-      multiplierCounter = 1;
-    } else multiplierCounter++;
-
-    return currentMatra;
-  }
-  
-  function nextBandishMatra(x, y) {
-    if (dividerCounter == divider) {
-      bandishMatras[currentMatraBandish].classList.contains("current") &&
-        bandishMatras[currentMatraBandish].classList.toggle("current");
-      
-      // set currentMatraBandish to i or the next one
-      if (x >= 0 && x < bandishMatras.length) { currentMatraBandish = x; }
-      else { ++currentMatraBandish >= bandishMatras.length && (currentMatraBandish = 0); }
-
-      // go to next line when reached the end of line
-      currentMatraBandish == 0 && nextBandishLine(y);
-
-      // highlight current one
-      bandishMatras[currentMatraBandish].classList.toggle("current");
-
-      dividerCounter = 1;
-    } else dividerCounter++;
-
-    return currentMatraBandish;
-  }
-
-  function play() {
-    loop && clearInterval(loop);
-    multiplier = document.getElementById("multiplier").value;
-    divider = document.getElementById("divider").value;
-
-    let interval = intervalBase / (document.getElementById("bpm").value * multiplier);
-    loop = setInterval(next, interval);
-  }
-
-  function stop() {
-    if (loop === undefined) reset();
-    else {
-      clearInterval(loop);
-      loop = undefined;
-    }
-  }
-
-  function setActive(e) {
-    let line = e.parentNode.parentNode;
-    if (e.checked) line.classList.add("active");
-    else line.classList.remove("active");
-
-    // TODO: incorporate it to next() or init()
-    stop();
-    reset();
-  }
-
-  function triggerSound(aObj) {
-    if (aObj.played.length === 0 || aObj.ended) aObj.play(); // never played or playback ended
-    else aObj.currentTime = 0;                               // playing
-  }
-
-  function reset() {
-    // TODO: it could be better ...
-    let currentCells = Array.from(document.getElementsByClassName("current"));
-    let currentLines = Array.from(document.getElementsByClassName("currentline"));
-    currentCells.forEach(td => {
-      td.classList.remove("current");
-    });
-    currentLines.forEach(tr => {
-      tr.classList.remove("currentline");
-    });
-    
-    bandish = document.getElementsByClassName("bandish active");
-    bandishMatras = bandish[currentLine].getElementsByTagName("td");
-    next(0, 0);
-  }
-
-  reset()
-
+  reset();
 </script>

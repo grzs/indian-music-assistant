@@ -1,0 +1,68 @@
+/* control panel */
+#controls {
+    margin-bottom: 10px;
+}
+#transport {
+    margin-bottom: 10px;
+}
+#tempo-controls {
+    width: 420px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+#bpm {
+    width: 50px;
+}
+#multiplier-container input {
+    width: 30px;
+}
+#bpm-container {
+}
+#multiplier-container {
+}
+#sounds {
+}
+
+/* table */
+table {
+    float: left;
+}
+table, td {
+    border-collapse: collapse;
+}
+td {
+    width: 40px;
+    text-align: center;
+}
+tr.separator {
+    height: 20px;
+}
+#bols td {
+    border-bottom: 1px solid;
+}
+td.current {
+    background-color: lightgreen;
+}
+td.current.sam {
+    background-color: lightsalmon;
+}
+td.current.tali {
+    background-color: lightseagreen;
+}
+td.current.kali {
+    background-color: lightblue;
+}
+.bandish.currentline td {
+    background-color: lightgray;
+}
+.bandish.currentline td.current {
+    background-color: lightgreen;
+}
+tr.bandish td {
+    color: gray;
+}
+tr.bandish.active td {
+    color: unset;
+}
