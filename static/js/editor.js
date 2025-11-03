@@ -1,6 +1,67 @@
 const parser = new DOMParser();
 const allowedTags = ["U", "B", "I"];
 
+function clearBandish() {
+  let lines = document.querySelectorAll(".separator,.bandish");
+  for (let i = lines.length - 1; i >= 1; --i) lines[i].remove(); // leaving the first separator
+}
+
+function newSeparator() {
+  let separator = document.createElement("tr");
+  separator.classList.value = "separator";
+  return separator;
+}
+
+function newBandishCell(cellData) {
+  if (cellData == undefined) cellData = ["-", "-", "-"];
+  let newCell = document.createElement("td");
+
+  for (value of cellData) {
+    let cellDiv = newCell.appendChild(document.createElement("div"));
+    cellDiv.textContent = value;
+    cellDiv.classList.value = "show hidden";
+
+    let cellInput = newCell.appendChild(document.createElement("input"));
+    cellInput.type = "text";
+    cellInput.value = value;
+    cellInput.classList.add("edit");
+    cellInput.setAttribute("onchange", "onMatraChange(this)");
+  }
+
+  return newCell;
+}
+
+function newBandishLine(lineData = []) {
+  let newLine = document.createElement("tr");
+  newLine.classList.value = "bandish active";
+
+  // add cells
+  for (let i = 0; i < bols.length; i++) {
+    newCell = newLine.appendChild(newBandishCell(lineData[i]));
+  }
+
+  // add control box
+  let th = newLine.appendChild(document.createElement("th"));
+
+  let thCbActive = th.appendChild(document.createElement("input"));
+  thCbActive.type = "checkbox";
+  thCbActive.checked = true;
+  thCbActive.classList.value = "show hidden";
+  thCbActive.setAttribute("onchange", "setActive(this)");
+
+  let thBtRemove = th.appendChild(document.createElement("button"));
+  thBtRemove.textContent = "-";
+  thBtRemove.classList.add("edit");
+  thBtRemove.setAttribute("onclick", "onRemoveLine(this)");
+
+  return newLine;
+}
+
+function onAddLine() {
+  editRow.insertAdjacentElement("beforebegin", newBandishLine());
+  editRow.insertAdjacentElement("beforebegin", newSeparator());
+}
+
 function onEditToggle() {
   let visible = cbEdit.checked;
   Array.from(document.getElementsByClassName("edit"), tag => {
@@ -27,63 +88,6 @@ function onMatraChange(matraInput) {
 }
 
 function onRemoveLine(button) {
-  button.parentNode.parentNode.remove();
-}
-
-function newSeparator() {
-  let separator = document.createElement("tr");
-  separator.classList.value = "separator";
-  return separator;
-}
-
-function newBandishCell() {
-  let newCell = document.createElement("td");
-  let cellDiv = newCell.appendChild(document.createElement("div"));
-  cellDiv.textContent = "-";
-  cellDiv.classList.value = "show hidden";
-
-  let cellInput = newCell.appendChild(document.createElement("input"));
-  cellInput.type = "text";
-  cellInput.value = "-";
-  cellInput.classList.add("edit");
-  cellInput.setAttribute("onchange", "onMatraChange(this)");
-
-  newCell.appendChild(cellDiv.cloneNode("deep"));
-  newCell.appendChild(cellInput.cloneNode("deep"));
-
-  newCell.appendChild(cellDiv.cloneNode("deep"));
-  newCell.appendChild(cellInput.cloneNode("deep"));
-
-  return newCell;
-}
-
-function newBandishLine() {
-  let newLine = document.createElement("tr");
-  newLine.classList.value = "bandish active";
-
-  // add cells
-  for (td of bols) {
-    newCell = newLine.appendChild(newBandishCell());
-  }
-
-  // add control box
-  let th = newLine.appendChild(document.createElement("th"));
-
-  let thCbActive = th.appendChild(document.createElement("input"));
-  thCbActive.type = "checkbox";
-  thCbActive.checked = true;
-  thCbActive.classList.value = "show hidden";
-  thCbActive.setAttribute("onchange", "setActive(this)");
-
-  let thBtRemove = th.appendChild(document.createElement("button"));
-  thBtRemove.textContent = "-";
-  thBtRemove.classList.add("edit");
-  thBtRemove.setAttribute("onclick", "onRemoveLine(this)");
-
-  return newLine;
-}
-
-function onAddLine() {
-  editRow.insertAdjacentElement("beforebegin", newBandishLine());
-  editRow.insertAdjacentElement("beforebegin", newSeparator());
+  button.parentElement.parentElement.nextElementSibling.remove();
+  button.parentElement.parentElement.remove();
 }
