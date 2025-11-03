@@ -11,8 +11,9 @@
     <div id="controls">
 
       <div id="transport">
-        <button onclick="play()">Play</button>
-        <button onclick="stop()">Stop</button>
+        <input id="play" type="checkbox" onchange="onPlayChange(this)"/><label for="play">Play</label>
+        <!-- <button onclick="play()">Play</button> -->
+        <!-- <button onclick="stop()">Stop</button> -->
         <button onclick="reset()">Reset</button>
       </div>
 

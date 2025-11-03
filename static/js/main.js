@@ -8,16 +8,6 @@ var bandish;
 var bandishMatras;
 var loop;
 
-function setBpm() {
-  document.getElementById("bpmSlider").value = document.getElementById("bpm").value;
-  loop != undefined && play();
-}
-
-function setBpmSlider() {
-  document.getElementById("bpm").value = document.getElementById("bpmSlider").value;
-  loop != undefined && play();
-}
-
 function next(x, y) {
   nextTaalMatra(x);
   nextBandishMatra(x, y);
@@ -87,40 +77,6 @@ function nextBandishLine(i) {
   return currentLine;
 }
 
-function play() {
-  loop && clearInterval(loop);
-  multiplier = document.getElementById("multiplier").value;
-  multiplierCounter = 1;
-  divider = document.getElementById("divider").value;
-  dividerCounter = 1;
-
-  let interval = intervalBase / (document.getElementById("bpm").value * multiplier);
-  loop = setInterval(next, interval);
-}
-
-function stop() {
-  if (loop === undefined) reset();
-  else {
-    clearInterval(loop);
-    loop = undefined;
-  }
-}
-
-function setActive(e) {
-  let line = e.parentNode.parentNode;
-  if (e.checked) line.classList.add("active");
-  else line.classList.remove("active");
-
-  // TODO: incorporate it to next() or init()
-  stop();
-  reset();
-}
-
-function triggerSound(aObj) {
-  if (aObj.played.length === 0 || aObj.ended) aObj.play(); // never played or playback ended
-  else aObj.currentTime = 0;                               // playing
-}
-
 function reset() {
   // TODO: it could be better ...
   let currentCells = Array.from(document.getElementsByClassName("current"));
@@ -140,3 +96,51 @@ function reset() {
   bandishMatras = [];
 }
 
+function stop() {
+  if (loop != undefined) {
+    clearInterval(loop);
+    loop = undefined;
+  }
+}
+
+function play() {
+  stop();
+  multiplier = document.getElementById("multiplier").value;
+  multiplierCounter = 1;
+  divider = document.getElementById("divider").value;
+  dividerCounter = 1;
+
+  let interval = intervalBase / (document.getElementById("bpm").value * multiplier);
+  loop = setInterval(next, interval);
+}
+
+function triggerSound(aObj) {
+  if (aObj.played.length === 0 || aObj.ended) aObj.play(); // never played or playback ended
+  else aObj.currentTime = 0;                               // playing
+}
+
+// event listeners
+
+function setActive(e) {
+  let line = e.parentNode.parentNode;
+  if (e.checked) line.classList.add("active");
+  else line.classList.remove("active");
+
+  stop();
+  reset();
+}
+
+function setBpm() {
+  document.getElementById("bpmSlider").value = document.getElementById("bpm").value;
+  loop != undefined && play();
+}
+
+function setBpmSlider() {
+  document.getElementById("bpm").value = document.getElementById("bpmSlider").value;
+  loop != undefined && play();
+}
+
+function onPlayChange(e) {
+  if (e.checked) play();
+  else stop();
+}
