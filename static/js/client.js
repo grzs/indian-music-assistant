@@ -1,3 +1,5 @@
+const apiVersion = "test"
+
 var url;
 var bandishes = [];
 
@@ -14,7 +16,7 @@ function refreshList() {
 }
 
 function fetchBandishes() {
-  let bandishesUrl = [urlInput.value, "bandishes"].join("/");
+  let bandishesUrl = [urlInput.value, "api", apiVersion, "bandishes"].join("/");
 
   fetch(bandishesUrl)
     .then((response) => {

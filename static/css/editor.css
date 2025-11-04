@@ -4,43 +4,8 @@
 }
 .edit-button {
     padding: 5px;
-    border: 1px solid black;
+    background-color: lightgray;
 }
 tr.bandish td .edit {
     width: 40px;
-}
-#loader {
-    display: grid;
-    row-gap: 5px;
-    width: 100%;
-    height: 80px;
-    margin-top: 20px;
-}
-#loader div {
-    height: 20px;
-}
-#url-div {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    width: 305px;
-}
-#url-div label {
-    width: 100px;
-    text-align: right;
-}
-#url-div input {
-    width: 200px;
-}
-#lister button {
-    width: 100px;
-}
-#lister select {
-    width: 200px;
-}
-#loader-buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100px;
 }

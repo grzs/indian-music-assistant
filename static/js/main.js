@@ -145,3 +145,7 @@ function onPlayChange() {
   if (cbPlay.checked) play();
   else _stop();
 }
+
+function onRsrcMgrShowClick() {
+  resourceMgr.classList.toggle("folded");
+}

@@ -72,15 +72,17 @@ function onAddLine(lineData = []) {
 }
 
 function onEditToggle() {
-  let visible = cbEdit.checked;
+  let edit_mode = cbEdit.checked;
   Array.from(document.getElementsByClassName("edit"), tag => {
-    if (visible) tag.classList.remove("hidden");
+    if (edit_mode) tag.classList.remove("hidden");
     else tag.classList.add("hidden");
   });
   Array.from(document.getElementsByClassName("show"), tag => {
-    if (visible) tag.classList.add("hidden");
+    if (edit_mode) tag.classList.add("hidden");
     else tag.classList.remove("hidden");
   });
+
+  if (edit_mode && ! resourceMgr.classList.contains("folded")) onRsrcMgrShowClick();
 }
 
 function onMatraChange(matraInput) {

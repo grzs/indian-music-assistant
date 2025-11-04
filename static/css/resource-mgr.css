@@ -1,0 +1,34 @@
+#resource-mgr {
+    position: relative;
+    left: 0px;
+    transition: left 1s;
+}
+#resource-mgr.folded {
+    left: -370px;
+}
+#resource-mgr .grid-container {
+    display: grid;
+    grid-template-columns: 130px 220px 25px;
+    align-items: start;
+    column-gap: 5px;
+    margin: 5px;
+}
+#url-div label {
+    text-align: right;
+}
+#list-dropdown {
+    width: 100%;
+}
+#resource-btn-box button {
+    margin-bottom: 3px;
+}
+#refresh-btn {
+    width: 100%;
+}
+#resource-mgr .btn-grp {
+    display: flex;
+    justify-content: space-between;
+}
+#resource-mgr .btn-grp button {
+    width: 62px;
+}
