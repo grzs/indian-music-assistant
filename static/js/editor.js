@@ -2,6 +2,8 @@ const parser = new DOMParser();
 const allowedTags = ["U", "B", "I"];
 
 function clearBandish() {
+  stop();
+  reset();
   let lines = document.querySelectorAll(".separator,.bandish");
   for (let i = lines.length - 1; i >= 1; --i) lines[i].remove(); // leaving the first separator
 }
@@ -37,7 +39,9 @@ function newBandishLine(lineData = []) {
 
   // add cells
   for (let i = 0; i < bols.length; i++) {
-    newCell = newLine.appendChild(newBandishCell(lineData[i]));
+    newCell = newLine.appendChild(
+      newBandishCell(Object.values(lineData[i]))
+    );
   }
 
   // add control box
@@ -57,9 +61,9 @@ function newBandishLine(lineData = []) {
   return newLine;
 }
 
-function renderBandish(lines) {
+function renderBandish(data) {
   clearBandish();
-  for (line of lines) onAddLine(line);
+  for (line of data["lines"]) onAddLine(line["matras"]);
 
   cbEdit.checked = false;
   onEditToggle();

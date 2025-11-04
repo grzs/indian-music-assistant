@@ -2,3 +2,4 @@
 * TODO fastapi server with mongodb storage
 * TODO save API server address to cookie
 * TODO login page
+* TODO limit composition list when fetched

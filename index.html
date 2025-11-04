@@ -130,12 +130,6 @@
 
     <hr/>
     <div id="resource-mgr">
-      <div id="url-div" class="grid-container">
-        <label for="url-input">URL:</label>
-        <input type="text" id="url-input" onchange="onURLChange()" value="http://localhost:8000"/>
-        <button onclick="onRsrcMgrShowClick()">&#x21B9;</button>
-      </div>
-
       <div id="resource-btn-box" class="grid-container show">
         <div>
           <button onclick="onListBtnClick()" id="refresh-btn">Refresh list</button>
@@ -144,7 +138,7 @@
             <button onclick="onSaveClick()">Save</button>
           </div>
           <div class="btn-grp">
-            <button onclick="onLoadClick()">Import</button>
+            <button onclick="onImportClick()">Import</button>
             <button onclick="onExportClick()">Export</button>
           </div>
         </div>
@@ -153,6 +147,12 @@
             <option value="">---</option>
           </select>
         </div>
+        <button onclick="onRsrcMgrShowClick()">&#x21B9;</button>
+      </div>
+
+      <div id="url-div" class="grid-container">
+        <label for="url-input">URL:</label>
+        <input type="text" id="url-input" onchange="onURLChange()" value="http://localhost:8000"/>
       </div>
     </div>
 
@@ -183,5 +183,8 @@
   const listDropdown = document.getElementById("list-dropdown");
   const resourceMgr = document.getElementById("resource-mgr");
 
-  window.onload = (event) => reset();
+  window.onload = (event) => {
+    fetchBandishes();
+    reset();
+  }
 </script>

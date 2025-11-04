@@ -9,25 +9,6 @@ const filePickerOpts = {
   ],
 };
 
-function parseLine(line) {
-  let data = [];
-  for (td of line) {
-    let cell = [];
-    for (div of td.getElementsByTagName("div")) cell.push(div.textContent);
-    data.push(cell);
-  }
-  return data;
-}
-
-function parseBandish() {
-  let bandishData = [];
-  for (line of document.getElementsByClassName("bandish"))
-    bandishData.push(
-      parseLine(
-        line.getElementsByTagName("td")));
-  return bandishData;
-}
-
 async function writeFile(fileHandle, contents) {
   // Create a FileSystemWritableFileStream to write to.
   const writable = await fileHandle.createWritable();
@@ -51,13 +32,42 @@ async function onExportClick() {
   let fileHandle = await window.showSaveFilePicker(filePickerOpts);
   await writeFile(
     fileHandle, 
-    JSON.stringify(parseBandish())
+    JSON.stringify(serializeBandish())
   );
 }
 
-function onLoadClick() {
-  stop();
-  reset();
+// serializers
+function getCompositionSlug() {
+  return (listDropdown.value || "bandish");
+}
+
+function serializeLine(line) {
+  let matras = [];
+  for (td of line) {
+    let matra = [];
+    for (div of td.getElementsByTagName("div")) matra.push(div.textContent);
+    matras.push(matra);
+  }
+  return {
+    "matras": matras,
+    "section": ""
+  };
+}
+
+function serializeBandish() {
+  let bandishData = [];
+  for (line of document.getElementsByClassName("bandish"))
+    bandishData.push(
+      serializeLine(
+        line.getElementsByTagName("td")));
+  return {
+    "slug": getCompositionSlug(),
+    "lines": bandishData
+  };
+}
+
+// event listeners
+function onImportClick() {
   readFile().then(f => reader.readAsText(f));
 }
 
