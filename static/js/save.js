@@ -46,7 +46,11 @@ function serializeLine(line) {
   for (td of line) {
     let matra = [];
     for (div of td.getElementsByTagName("div")) matra.push(div.textContent);
-    matras.push(matra);
+    matras.push({
+      "syllable": matra[0],
+      "sargam": matra[1],
+      "bol": matra[2],
+    });
   }
   return {
     "matras": matras,
