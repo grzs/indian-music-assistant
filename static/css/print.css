@@ -1,0 +1,9 @@
+button, input, select, #actions, #controls, #edit-row, #login-modal {
+    display: none;
+}
+table {
+    width: 100%;
+}
+th.cb-active {
+    display: none;
+}

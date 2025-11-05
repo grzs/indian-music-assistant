@@ -8,7 +8,7 @@
 }
 #resource-mgr .grid-container {
     display: grid;
-    grid-template-columns: 130px 220px 25px;
+    grid-template-columns: 60px 220px 60px 25px;
     align-items: start;
     column-gap: 5px;
     margin: 5px;

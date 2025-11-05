@@ -7,19 +7,42 @@
     <link href="static/css/main.css" rel="stylesheet" />
     <link href="static/css/controls.css" rel="stylesheet" />
     <link href="static/css/editor.css" rel="stylesheet" />
-    <link href="static/css/resource-mgr.css" rel="stylesheet" />
+    <!-- <link href="static/css/resource-mgr.css" rel="stylesheet" /> -->
+    <link href="static/css/print.css" media="print" rel="stylesheet" />
     <script type="text/javascript" src="static/js/main.js"></script>
     <script type="text/javascript" src="static/js/editor.js"></script>
     <script type="text/javascript" src="static/js/save.js"></script>
     <script type="text/javascript" src="static/js/client.js"></script>
   </head>
   <body>
-    <div id="controls">
+    <div id="actions">
+      <div onclick="onLoadClick()">Load</div>
+      <div onclick="onEditClick()">Edit</div>
+      <div onclick="onSaveClick()">Save</div>
+      <div onclick="onCreateClick()">Create</div>
+      <div onclick="onDeleteClick()">Delete</div>
+      <div onclick="onImportClick()">Import</div>
+      <div onclick="onExportClick()">Export</div>
+      <div onclick="onLoginClick()">Login</div>
+    </div>
 
+    <div id="metadata">
+      <select name="list-dropdown" id="list-dropdown">
+        <option value="" data-status="new">-- untitled --</option>
+      </select>
+      <button onclick="onListBtnClick()" id="refresh-btn">Refresh list</button>
+    </div>
+
+    <div id="login-modal">
+      <div id="url-div" class="grid-container">
+        <label for="url-input">URL:</label>
+        <input type="text" id="url-input" onchange="onURLChange()" value="http://localhost:8000" readonly/>
+      </div>
+    </div>
+
+    <div id="controls">
       <div id="transport">
         <input id="cb-play" type="checkbox" onchange="onPlayChange()"/><label for="cb-play">Play</label>
-        <!-- <button onclick="play()">Play</button> -->
-        <!-- <button onclick="stop()">Stop</button> -->
         <button onclick="reset()">Reset</button>
       </div>
 
@@ -38,14 +61,19 @@
       </div>
 
       <div id="sounds">
-        <div>
+        <div id="sound-controls">
           <input type="checkbox" id="cb-chime"/><label for="cb-chime">chime</label>
-        </div>
-        <div>
           <input type="checkbox" id="cb-click"/><label for="cb-click">click</label>
         </div>
-      </div>
 
+        <audio id="sam">
+          <source src="media/glass.ogg" type="audio/ogg" />
+        </audio>
+        <audio id="click">
+          <source src="media/click.ogg" type="audio/ogg" />
+        </audio>
+
+      </div>
     </div>
 
     <table id="bandish-container">
@@ -128,42 +156,6 @@
       </tbody>
     </table>
 
-    <hr/>
-    <div id="resource-mgr">
-      <div id="resource-btn-box" class="grid-container show">
-        <div>
-          <button onclick="onListBtnClick()" id="refresh-btn">Refresh list</button>
-          <div class="btn-grp">
-            <button onclick="onLoadClick()">Load</button>
-            <button onclick="onSaveClick()">Save</button>
-          </div>
-          <div class="btn-grp">
-            <button onclick="onImportClick()">Import</button>
-            <button onclick="onExportClick()">Export</button>
-          </div>
-        </div>
-        <div>
-          <select name="list-dropdown" id="list-dropdown">
-            <option value="">---</option>
-          </select>
-        </div>
-        <button onclick="onRsrcMgrShowClick()">&#x21B9;</button>
-      </div>
-
-      <div id="url-div" class="grid-container">
-        <label for="url-input">URL:</label>
-        <input type="text" id="url-input" onchange="onURLChange()" value="http://localhost:8000"/>
-      </div>
-    </div>
-
-    <audio id="sam">
-      <source src="media/glass.ogg" type="audio/ogg" />
-    </audio>
-
-    <audio id="click">
-      <source src="media/click.ogg" type="audio/ogg" />
-    </audio>
-
   </body>
 </html>
 
@@ -181,7 +173,6 @@
   const btAddLine = document.getElementById("bt-add-line");
   const urlInput = document.getElementById("url-input");
   const listDropdown = document.getElementById("list-dropdown");
-  const resourceMgr = document.getElementById("resource-mgr");
 
   window.onload = (event) => {
     fetchBandishes();

@@ -46,6 +46,7 @@ function newBandishLine(lineData = []) {
 
   // add control box
   let th = newLine.appendChild(document.createElement("th"));
+  th.classList.add("cb-active")
 
   let thCbActive = th.appendChild(document.createElement("input"));
   thCbActive.type = "checkbox";
